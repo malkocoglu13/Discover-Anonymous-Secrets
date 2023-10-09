@@ -1,5 +1,10 @@
+// Import necessary modules
 import express from "express";
 import axios from "axios";
+import dotenv from "dotenv"; // Import dotenv
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -8,7 +13,8 @@ app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
   try {
-    const result = await axios.get("https://secrets-api.appbrewery.com/random");
+    const apiURL = process.env.API_URL; // Access the API URL from environment variables
+    const result = await axios.get(apiURL); // Use apiURL from environment variables
     res.render("index.ejs", {
       secret: result.data.secret,
       user: result.data.username,
